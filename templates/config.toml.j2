@@ -1,0 +1,112 @@
+# data
+data-path="{{besu_data_dir}}"
+logging="{{besu_log_level}}"
+
+{% if besu_node_private_key_file != "" %}
+# private_key
+node-private-key-file="{{besu_node_private_key_file}}"
+{% endif %}
+
+{% if besu_network.lower() in ["mainnet", "rinkeby", "goerli", "ropsten", "classic", "mordor", "kotti", "dev"] %}
+network="{{besu_network}}"
+{% else %}
+genesis-file="{{ besu_genesis_path }}"
+{% endif %}
+min-gas-price={{ besu_min_gas }}
+sync-mode="{{besu_sync_mode}}"
+host-whitelist=[{{besu_host_whitelist|map('to_json')|join(',')}}]
+
+{% if besu_identity is defined %}
+# identity
+identity="{{ besu_identity }}"
+{% endif %}
+
+{% if besu_miner_enabled|bool == True %}
+# miner
+miner-enabled=true
+miner-coinbase="{{besu_miner_coinbase}}"
+{% endif %}
+
+{% if besu_miner_extra_data != "" %}
+miner-extra-data="{{besu_miner_extra_data}}"
+{% endif %}
+
+{% if besu_rpc_http_enabled|bool == True %}
+# rpc
+rpc-http-enabled=true
+rpc-http-host="{{besu_rpc_http_host}}"
+rpc-http-port={{besu_rpc_http_port}}
+rpc-http-api=[{{besu_rpc_http_api|map('to_json')|join(',')}}]
+rpc-http-cors-origins=[{{besu_rpc_http_cors_origins|map('to_json')|join(',')}}]
+{% endif %}
+
+
+{% if besu_rpc_ws_enabled|bool == True %}
+# ws
+rpc-ws-enabled=true
+rpc-ws-api=[{{besu_rpc_ws_api|map('to_json')|join(',')}}]
+rpc-ws-host="{{besu_rpc_ws_host}}"
+rpc-ws-port={{besu_rpc_ws_port}}
+{% endif %}
+
+{% if besu_graphql_http_enabled|bool == True %}
+# graphql
+graphql-http-enabled=true
+graphql-http-host="{{besu_graphql_http_host}}"
+graphql-http-port={{besu_graphql_http_port}}
+graphql-http-cors-origins=[{{besu_graphql_http_cors_origins|map('to_json')|join(',')}}]
+{% endif %}
+
+# p2p
+{% if besu_host_ip != "" %}
+p2p-host="{{besu_host_ip}}"
+{% endif %}
+p2p-port={{besu_p2p_port}}
+{% if besu_max_peers is defined %}
+max-peers={{besu_max_peers}}
+{% endif %}
+
+# metrics
+metrics-enabled=true
+metrics-host="{{besu_metrics_host}}"
+metrics-port={{besu_metrics_port}}
+
+{% if besu_permissions_accounts_config_file is defined %}
+# local account permissions
+permissions-accounts-config-file-enabled=true
+permissions-accounts-config-file="{{ besu_permissions_accounts_config_file }}"
+{% endif %}
+
+{% if besu_permissions_nodes_config_file is defined %}
+# local node permissions
+permissions-nodes-config-file-enabled=true
+permissions-nodes-config-file="{{ besu_permissions_nodes_config_file }}"
+{% endif %}
+
+{% if besu_permissions_accounts_contract_address is defined %}
+# onchain account permissions
+permissions-accounts-contract-enabled=true
+permissions-accounts-contract-address="{{ besu_permissions_accounts_contract_address }}"
+{% endif %}
+
+{% if besu_permissions_nodes_contract_address is defined %}
+# onchain node permissions
+permissions-nodes-contract-enabled=true
+permissions-nodes-contract-address="{{ besu_permissions_nodes_contract_address }}"
+{% endif %}
+
+{% if besu_bootnodes|length > 0 %}
+# bootnodes
+bootnodes=[{{besu_bootnodes|map('to_json')|join(',')}}]
+{% endif %}
+
+{% if besu_privacy_enabled|bool == True %}
+# Orion
+privacy-enabled=true
+privacy-url="{{besu_privacy_url}}"
+privacy-public-key-file="{{besu_privacy_public_key_file}}"
+{% if besu_privacy_marker_tx_signing_key_file != "" %}
+privacy-marker-transaction-signing-key-file="{{besu_privacy_marker_tx_signing_key_file}}"
+{% endif %}
+{% endif %}
+

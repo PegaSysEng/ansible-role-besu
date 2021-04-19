@@ -1,0 +1,9 @@
+{{ besu_log_dir }}/*.log {
+    rotate 14
+    notifempty
+    missingok
+    size 25M
+    daily
+    copytruncate
+    compress
+}
