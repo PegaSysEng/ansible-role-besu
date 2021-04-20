@@ -1,5 +1,8 @@
 # Ansible Role: Besu
 
+## WARNING: This role is being deprecated in favour of [consensys.hyperledger_besu](https://galaxy.ansible.com/consensys/hyperledger_besu)
+
+
 ### Description
 Ansible role that will install, configure and runs [Besu](https://www.hyperledger.org/projects/besu): an enterprise Java Ethereum Client
 
