@@ -1,4 +1,9 @@
 ---
+- name: Deprecation notice
+  fail:
+    msg: "Warning: This role is being deprecated. Please update to use the new role consensys.hyperlegedger_besu"
+  ignore_errors: True
+
 - name: Ensure we have sane configuration
   block:
     - name: Check besu_version is correct
@@ -51,3 +56,8 @@
 
 - name: Create Besu service
   include_tasks: "service.yml"
+
+- name: Deprecation notice
+  fail:
+    msg: "Warning: This role is being deprecated. Please update to use the new role consensys.hyperlegedger_besu"
+  ignore_errors: True
